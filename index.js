@@ -26,7 +26,7 @@ async function run (){
             const cursor = serviceCollection.find({});
             const services = await cursor.toArray();
             res.send(services)
-        })
+        });
         //GET single Service
         app.get('/services/:id', async(req, res)=>{
             const id = req.params.id;
@@ -34,7 +34,7 @@ async function run (){
             const query = {_id: ObjectId(id)};
             const service = await serviceCollection.findOne(query);
             res.json(service);
-        })
+        });
 
         // POST API
         app.post('/services', async(req, res)=>{
