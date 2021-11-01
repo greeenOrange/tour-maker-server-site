@@ -20,12 +20,18 @@ async function run (){
         await client.connect();
         const database = client.db('amazing_tour')
         const serviceCollection = database.collection('services');
+        const orderCollection = database.collection('order')
         
         //GET Services
         app.get('/services', async(req,res) =>{
             const cursor = serviceCollection.find({});
             const services = await cursor.toArray();
             res.send(services)
+        });
+        app.get('/order', async(req,res) =>{
+            const cursor = orderCollection.find({});
+            const order = await cursor.toArray();
+            res.send(order)
         });
         //GET single Service
         app.get('/services/:id', async(req, res)=>{
@@ -43,6 +49,12 @@ async function run (){
             const result = await serviceCollection.insertOne(service)
             res.json(result)
         });
+        app.post('/order', async(req, res)=>{
+            const order = req.body;
+            console.log('hit the order', order);
+            const result = await orderCollection.insertOne(order)
+            res.json(result)
+        });
         
         //DELETE API
         app.delete('/services/:id', async(req, res)=>{
@@ -51,6 +63,19 @@ async function run (){
             const result = await serviceCollection.deleteOne(query);
             res.json(result)
         })
+        app.delete('/order/:id', async(req, res)=>{
+            const id = req.params.id;
+            const query = {_id:ObjectId(id)};
+            const result = await orderCollection.deleteOne(query);
+            res.json(result)
+        })
+
+        app.get("/myEvents/:email", async (req, res) => {
+            const result = await EventsCollection.find({
+              email: req.params.email,
+            }).toArray();
+            res.send(result);
+          });
 
     }
     finally{
