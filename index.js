@@ -28,11 +28,29 @@ async function run (){
             const services = await cursor.toArray();
             res.send(services)
         });
-        app.get('/order', async(req,res) =>{
-            const cursor = orderCollection.find({});
-            const order = await cursor.toArray();
-            res.send(order)
-        });
+
+
+// POST  API 
+app.post('/order', async(req, res) =>{
+    console.log(req.body);
+    const order = req.body
+    const result = await orderCollection.insertOne(order)
+    console.log(result);
+    res.send(result)
+  })
+
+  //GET Order APi
+  app.get('/order', async(req, res)=>{
+    const cursor = orderCollection.find({})
+    const order = await cursor.toArray()
+    res.send(order)
+  })
+
+        // app.get('/order', async(req,res) =>{
+        //     const cursor = orderCollection.find({});
+        //     const order = await cursor.toArray();
+        //     res.send(order)
+        // });
         //GET single Service
         app.get('/services/:id', async(req, res)=>{
             const id = req.params.id;
@@ -51,9 +69,9 @@ async function run (){
                     status: 'confirm'
                 }
             }
-            const result = await orderCollection.updateOne(query,package);
-            console.log(result);
-            res.json(result)
+            // const result = await orderCollection.updateOne(query,package);
+            // console.log(result);
+            // res.json(result)
         });
 
         // POST API
@@ -63,12 +81,12 @@ async function run (){
             const result = await serviceCollection.insertOne(service)
             res.json(result)
         });
-        app.post('/order', async(req, res)=>{
-            const order = req.body;
-            console.log('hit the order', order);
-            const result = await orderCollection.insertOne(order)
-            res.json(result)
-        });
+        // app.post('/order', async(req, res)=>{
+        //     const order = req.body;
+        //     console.log('hit the order', order);
+        //     const result = await orderCollection.insertOne(order)
+        //     res.json(result)
+        // });
         
         //DELETE API
         app.delete('/services/:id', async(req, res)=>{
@@ -84,12 +102,12 @@ async function run (){
             res.json(result)
         })
 
-        app.get("/myEvents/:email", async (req, res) => {
-            const result = await EventsCollection.find({
-              email: req.params.email,
-            }).toArray();
-            res.send(result);
-          });
+        // app.get("/myEvents/:email", async (req, res) => {
+        //     const result = await EventsCollection.find({
+        //       email: req.params.email,
+        //     }).toArray();
+        //     res.send(result);
+        //   });
 
     }
     finally{
