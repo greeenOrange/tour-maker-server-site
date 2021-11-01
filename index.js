@@ -42,6 +42,20 @@ async function run (){
             res.json(service);
         });
 
+        app.get('/order/:id', async(req, res)=>{
+            const id = req.params.id;
+            console.log('right id',id);
+            const query = {_id: ObjectId(id)};
+            const package = {
+                $set:{
+                    status: 'confirm'
+                }
+            }
+            const result = await orderCollection.updateOne(query,package);
+            console.log(result);
+            res.json(result)
+        });
+
         // POST API
         app.post('/services', async(req, res)=>{
             const service = req.body;
