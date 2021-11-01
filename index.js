@@ -106,12 +106,12 @@ app.post('/order', async(req, res) =>{
       })
 
 
-        // app.get("/myEvents/:email", async (req, res) => {
-        //     const result = await EventsCollection.find({
-        //       email: req.params.email,
-        //     }).toArray();
-        //     res.send(result);
-        //   });
+      app.get('/order/:email', async(req, res)=>{
+        const email = req.params.email
+        console.log(email)
+        const result = await orderCollection.find({email}).toArray()
+        res.json(result)
+      })
 
     }
     finally{
