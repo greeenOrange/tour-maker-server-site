@@ -88,13 +88,22 @@ app.post('/order', async(req, res) =>{
         //     res.json(result)
         // });
         
-        //DELETE API
-        app.delete('/order/:id', async(req, res)=>{
-            const id = req.params.id;
-            const query = {_id:ObjectId(id)};
-            const result = await serviceCollection.deleteOne(query);
-            res.json(result)
-        });
+        // //DELETE API
+        // app.delete('/order/:id', async(req, res)=>{
+        //     const id = req.params.id;
+        //     const query = {_id:ObjectId(id)};
+        //     const result = await serviceCollection.deleteOne(query);
+        //     res.json(result)
+        // });
+
+        //delete order api
+    app.delete('/order/:id', async(req, res)=>{
+        const id = req.params.id;
+        const query = {_id: ObjectId(id)}
+        const result = await orderCollection.deleteOne(query)
+        console.log(result);
+        res.send(result);
+      })
 
 
         // app.get("/myEvents/:email", async (req, res) => {
