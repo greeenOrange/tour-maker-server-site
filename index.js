@@ -95,12 +95,6 @@ app.post('/order', async(req, res) =>{
             const result = await serviceCollection.deleteOne(query);
             res.json(result)
         })
-        app.delete('/order/:id', async(req, res)=>{
-            const id = req.params.id;
-            const query = {_id:ObjectId(id)};
-            const result = await orderCollection.deleteOne(query);
-            res.json(result)
-        })
 
         // app.get("/myEvents/:email", async (req, res) => {
         //     const result = await EventsCollection.find({
